@@ -14,15 +14,11 @@ namespace DonnyJustin_Assign2
     public partial class Form1 : Form
     {
         List<Course> coursePool = new List<Course>();
+        IDictionary<uint, Student> studentPool = new Dictionary<uint, Student>();
+
         public Form1()
         {
             InitializeComponent();
-
-            // List of Course objects
-            //List<Course> coursePool = new List<Course>();
-
-            // Key: ZID    Value: Student object
-            IDictionary<uint, Student> studentPool = new Dictionary<uint, Student>();
 
             // read student input file
             string[] studentLines = File.ReadAllLines("../../input_01.txt");
@@ -54,17 +50,7 @@ namespace DonnyJustin_Assign2
             foreach (Course c in coursePool)
                 listBox2.Items.Add(c);
             foreach (KeyValuePair<uint, Student> s in sortedPool)
-                listBox1.Items.Add(s.ToString());
-            foreach (Course c in coursePool)
-            {
-                //TODO
-                //add unique department codes
-                int index = comboBox3.FindString(c.GetDepartmentCode());
-                if (index == -1)
-                {
-                    comboBox3.Items.Add(c.GetDepartmentCode());
-                }
-            }
+                listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -72,14 +58,7 @@ namespace DonnyJustin_Assign2
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //print class roster
-            //richTextBox1.Text = "you hit the button for print!";
-            // print list of courses
-            foreach (Course c in coursePool)
-                richTextBox1.Text += c.ToString() + "\n";
-        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -88,27 +67,149 @@ namespace DonnyJustin_Assign2
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //on student activated item change: 
-            richTextBox1.Text += "test test test \n";
+            //Output_RichTextBox.Text += "Student selected: " + listBox1.SelectedItem as string + "\n";
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             //on course activated item change: 
-            richTextBox1.Text += "course changed \n";
+            //Output_RichTextBox.Text += "Course selected: " + listBox2.SelectedItem as string + "\n";
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void Search_Button_Click(object sender, EventArgs e)
         {
-            //CLICK on Add course
-            string courseCode = (string)comboBox3.SelectedItem;
-            string courseNumber = textBox4.Text;
-            string sectionNumber = textBox3.Text;
-            string capacity = numericUpDown1.Value.ToString();
-            //richTextBox1.Text += courseCode + "\n";
-            //richTextBox1.Text += courseNumber + "\n";
-            //richTextBox1.Text += sectionNumber + "\n";
-            //richTextBox1.Text += capacity + "\n";
-            richTextBox1.Text += courseCode + " " + courseNumber + "-" + sectionNumber + "(0/" + capacity + "\n";
+            // if there is a zid in the textbox, search for that student
+            if (ZID_RichTextBox.Text.Length <= 0 && Course_RichTextBox.Text.Length <= 0)
+                return;
+
+            if (ZID_RichTextBox.Text.Length > 0)
+            {
+                foreach (KeyValuePair<uint, Student> s in studentPool)
+                {
+                    if (ZID_RichTextBox.Text == s.Key.ToString())
+                    {
+                        Output_RichTextBox.Text += "z" + s.Key + "   " + s.Value.getLastName() + ", " + s.Value.getFirstName() + "   " + s.Value.getMajor() + "\n";
+                    }
+
+                }
+            }
+
+            if (Course_RichTextBox.Text.Length > 0)
+            {
+                foreach (Course c in coursePool)
+                    if (Course_RichTextBox.Text == c.GetDepartmentCode())
+                    {
+                        Output_RichTextBox.Text += c.ToString() + "\n";
+                    }
+            }
+
+        }
+
+        private void Enroll_Button_Click(object sender, EventArgs e)
+        {
+            string selectedStudent = listBox1.SelectedItem.ToString();
+            string selectedCourse = listBox2.SelectedItem.ToString();
+
+            // parse student selected
+            string[] studentTokens = selectedStudent.Split(' ');
+            studentTokens[0] = studentTokens[0].Remove(0, 1);
+
+            // parse course selected.   [0] = Department   [1] = Course   [2] = Section
+            string[] tokens = selectedCourse.Split(' ', '-');
+
+            // check if student exists
+            bool studentExists = false;
+            //uint id = Convert.ToUInt64(ZID_RichTextBox.Text.ToString());
+            foreach (KeyValuePair<uint, Student> kvp in studentPool)
+            {
+                if (studentTokens[0] != kvp.Key.ToString())
+                    studentExists = false;
+                else
+                {
+                    studentExists = true;
+                    break;
+                }
+            }
+
+            // check if class exists
+            bool classExists = false;
+            foreach (Course c in coursePool)
+            {
+                if (tokens[0] == c.GetDepartmentCode() && tokens[1] == c.GetCourseNumber().ToString() && tokens[2] == c.GetSectionNumber())
+                    classExists = true;
+            }
+
+            // check if class has available enrollment
+            bool classFull = true;
+            foreach (Course c in coursePool)
+            {
+                if (string.Equals(tokens[0], c.GetDepartmentCode()) && tokens[1] == c.GetCourseNumber().ToString() && tokens[2] == c.GetSectionNumber())
+                {
+                    if (c.GetTotalCurrentlyEnrolled() >= c.GetMaxCapacity())
+                    {
+                        classFull = true;
+                        Output_RichTextBox.Text += "\nThis class is currently full.\n";
+                    }
+                    else
+                        classFull = false;
+
+                    if ((studentExists == true && classExists == true && classFull == false))
+                    {
+                        uint zid = Convert.ToUInt32(studentTokens[0]);
+
+                        foreach (KeyValuePair<uint, Student> s in studentPool)
+                        {
+                            if (s.Key == zid && s.Value.getCreditHours() <= 18)
+                            {
+                                // add credit hours to student
+                                s.Value.setCreditHours(c.GetTotalCurrentlyEnrolled());
+                                c.addStudent(zid);
+                                Output_RichTextBox.Text += "\nStudent added successfully.\n";
+                            }
+                        }
+                        //break;
+                    }
+                }
+            }
+
+            // update course list
+            listBox2.Items.Clear();
+            foreach (Course c in coursePool)
+                listBox2.Items.Add(c);
+
+        }
+
+        private void CourseRoster_Button_Click_1(object sender, EventArgs e)
+        {
+            string selectedCourse = listBox2.SelectedItem.ToString();
+
+            int emptyCheck = 0;
+            foreach (Course c in coursePool)
+            {
+                if (selectedCourse == c.ToString())                // find selected course in List
+                {
+                    uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
+                    foreach (KeyValuePair<uint, Student> s in studentPool) 
+                    {
+                        for (int i = 0; i < tempArray.Length; i++)
+                        {
+                            if (s.Key == tempArray[i])              // if student is enrolled in the class, print their info
+                            {
+                                Output_RichTextBox.Text += "\nCourse: " + selectedCourse + "\n";
+                                Output_RichTextBox.Text += "-----------------------------------------------\n";
+                                Output_RichTextBox.Text += "z" + tempArray[i] + "   " + s.Value.getLastName() + ", " 
+                                                        + s.Value.getFirstName() + "   " + s.Value.getMajor() +"\n";
+                                emptyCheck++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (emptyCheck == 0)
+                Output_RichTextBox.Text += "Class is empty.\n";
+
+           
         }
     }
 

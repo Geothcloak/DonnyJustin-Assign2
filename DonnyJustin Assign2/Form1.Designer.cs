@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtPrintCourse = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.CourseRoster_Button = new System.Windows.Forms.Button();
+            this.Enroll_Button = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.Search_Button = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,36 +49,37 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.Output_RichTextBox = new System.Windows.Forms.RichTextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.ZID_RichTextBox = new System.Windows.Forms.TextBox();
+            this.Course_RichTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtPrintCourse
+            // CourseRoster_Button
             // 
-            this.txtPrintCourse.Location = new System.Drawing.Point(13, 55);
-            this.txtPrintCourse.Name = "txtPrintCourse";
-            this.txtPrintCourse.Size = new System.Drawing.Size(121, 23);
-            this.txtPrintCourse.TabIndex = 0;
-            this.txtPrintCourse.Text = "Print Course Roster";
-            this.txtPrintCourse.UseVisualStyleBackColor = true;
-            this.txtPrintCourse.Click += new System.EventHandler(this.button1_Click);
+            this.CourseRoster_Button.Location = new System.Drawing.Point(13, 55);
+            this.CourseRoster_Button.Name = "CourseRoster_Button";
+            this.CourseRoster_Button.Size = new System.Drawing.Size(121, 23);
+            this.CourseRoster_Button.TabIndex = 0;
+            this.CourseRoster_Button.Text = "Print Course Roster";
+            this.CourseRoster_Button.UseVisualStyleBackColor = true;
+            this.CourseRoster_Button.Click += new System.EventHandler(this.CourseRoster_Button_Click_1);
             // 
-            // button2
+            // Enroll_Button
             // 
-            this.button2.Location = new System.Drawing.Point(13, 85);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Enroll Student";
-            this.button2.UseVisualStyleBackColor = true;
+            this.Enroll_Button.Location = new System.Drawing.Point(13, 85);
+            this.Enroll_Button.Name = "Enroll_Button";
+            this.Enroll_Button.Size = new System.Drawing.Size(121, 23);
+            this.Enroll_Button.TabIndex = 1;
+            this.Enroll_Button.Text = "Enroll Student";
+            this.Enroll_Button.UseVisualStyleBackColor = true;
+            this.Enroll_Button.Click += new System.EventHandler(this.Enroll_Button_Click);
             // 
             // button3
             // 
@@ -89,14 +90,15 @@
             this.button3.Text = "Drop Student";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // Search_Button
             // 
-            this.button4.Location = new System.Drawing.Point(13, 145);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(121, 23);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Apply Search Criteria";
-            this.button4.UseVisualStyleBackColor = true;
+            this.Search_Button.Location = new System.Drawing.Point(13, 145);
+            this.Search_Button.Name = "Search_Button";
+            this.Search_Button.Size = new System.Drawing.Size(121, 23);
+            this.Search_Button.TabIndex = 3;
+            this.Search_Button.Text = "Apply Search Criteria";
+            this.Search_Button.UseVisualStyleBackColor = true;
+            this.Search_Button.Click += new System.EventHandler(this.Search_Button_Click);
             // 
             // button5
             // 
@@ -115,7 +117,6 @@
             this.button6.TabIndex = 5;
             this.button6.Text = "Add Course";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label1
             // 
@@ -246,13 +247,13 @@
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 20;
             // 
-            // richTextBox1
+            // Output_RichTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(19, 460);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1084, 185);
-            this.richTextBox1.TabIndex = 21;
-            this.richTextBox1.Text = "";
+            this.Output_RichTextBox.Location = new System.Drawing.Point(19, 460);
+            this.Output_RichTextBox.Name = "Output_RichTextBox";
+            this.Output_RichTextBox.Size = new System.Drawing.Size(1084, 185);
+            this.Output_RichTextBox.TabIndex = 21;
+            this.Output_RichTextBox.Text = "";
             // 
             // listBox1
             // 
@@ -303,34 +304,34 @@
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 27;
             // 
-            // textBox5
+            // ZID_RichTextBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(140, 85);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 28;
+            this.ZID_RichTextBox.Location = new System.Drawing.Point(140, 85);
+            this.ZID_RichTextBox.Name = "ZID_RichTextBox";
+            this.ZID_RichTextBox.Size = new System.Drawing.Size(100, 20);
+            this.ZID_RichTextBox.TabIndex = 28;
             // 
-            // textBox6
+            // Course_RichTextBox
             // 
-            this.textBox6.Location = new System.Drawing.Point(140, 145);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 29;
+            this.Course_RichTextBox.Location = new System.Drawing.Point(140, 145);
+            this.Course_RichTextBox.Name = "Course_RichTextBox";
+            this.Course_RichTextBox.Size = new System.Drawing.Size(100, 20);
+            this.Course_RichTextBox.TabIndex = 29;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1141, 661);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.Course_RichTextBox);
+            this.Controls.Add(this.ZID_RichTextBox);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.Output_RichTextBox);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
@@ -348,10 +349,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.Search_Button);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.txtPrintCourse);
+            this.Controls.Add(this.Enroll_Button);
+            this.Controls.Add(this.CourseRoster_Button);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -362,10 +363,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button txtPrintCourse;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button CourseRoster_Button;
+        private System.Windows.Forms.Button Enroll_Button;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button Search_Button;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label1;
@@ -383,15 +384,15 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox Output_RichTextBox;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox ZID_RichTextBox;
+        private System.Windows.Forms.TextBox Course_RichTextBox;
     }
 }
 
