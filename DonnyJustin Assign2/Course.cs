@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-
+// random comment
 namespace DonnyJustin_Assign2
 {
     public class Course : IComparable
