@@ -167,7 +167,6 @@ namespace DonnyJustin_Assign2
                                 Output_RichTextBox.Text += "\nStudent added successfully.\n";
                             }
                         }
-                        //break;
                     }
                 }
             }
@@ -188,6 +187,9 @@ namespace DonnyJustin_Assign2
             {
                 if (selectedCourse == c.ToString())                // find selected course in List
                 {
+                    Output_RichTextBox.Text += "\nCourse: " + selectedCourse + "\n";
+                    Output_RichTextBox.Text += "-----------------------------------------------\n";
+
                     uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
                     foreach (KeyValuePair<uint, Student> s in studentPool) 
                     {
@@ -195,8 +197,6 @@ namespace DonnyJustin_Assign2
                         {
                             if (s.Key == tempArray[i])              // if student is enrolled in the class, print their info
                             {
-                                Output_RichTextBox.Text += "\nCourse: " + selectedCourse + "\n";
-                                Output_RichTextBox.Text += "-----------------------------------------------\n";
                                 Output_RichTextBox.Text += "z" + tempArray[i] + "   " + s.Value.getLastName() + ", " 
                                                         + s.Value.getFirstName() + "   " + s.Value.getMajor() +"\n";
                                 emptyCheck++;
@@ -210,6 +210,79 @@ namespace DonnyJustin_Assign2
                 Output_RichTextBox.Text += "Class is empty.\n";
 
            
+        }
+
+        private void Drop_Button_Click(object sender, EventArgs e)
+        {
+            string selectedStudent = listBox1.SelectedItem.ToString();
+            string selectedCourse = listBox2.SelectedItem.ToString();
+
+            // parse student selected
+            string[] studentTokens = selectedStudent.Split(' ');
+            studentTokens[0] = studentTokens[0].Remove(0, 1);
+
+            // parse course selected.   [0] = Department   [1] = Course   [2] = Section
+            string[] tokens = selectedCourse.Split(' ', '-');
+
+            // check if student exists
+            bool studentExists = false;
+            //uint id = Convert.ToUInt64(ZID_RichTextBox.Text.ToString());
+            foreach (KeyValuePair<uint, Student> kvp in studentPool)
+            {
+                if (studentTokens[0] != kvp.Key.ToString())
+                    studentExists = false;
+                else
+                {
+                    studentExists = true;
+                    break;
+                }
+            }
+
+            // check if class exists
+            bool classExists = false;
+            foreach (Course c in coursePool)
+            {
+                if (tokens[0] == c.GetDepartmentCode() && tokens[1] == c.GetCourseNumber().ToString() && tokens[2] == c.GetSectionNumber())
+                    classExists = true;
+            }
+
+            // check if class has available enrollment
+            bool classFull = true;
+            foreach (Course c in coursePool)
+            {
+                if (string.Equals(tokens[0], c.GetDepartmentCode()) && tokens[1] == c.GetCourseNumber().ToString() && tokens[2] == c.GetSectionNumber())
+                {
+                    if (c.GetTotalCurrentlyEnrolled() >= c.GetMaxCapacity())
+                    {
+                        classFull = true;
+                        Output_RichTextBox.Text += "\nThis class is currently full.\n";
+                    }
+                    else
+                        classFull = false;
+
+                    if ((studentExists == true && classExists == true && classFull == false))
+                    {
+                        uint zid = Convert.ToUInt32(studentTokens[0]);
+
+                        foreach (KeyValuePair<uint, Student> s in studentPool)
+                        {
+                            if (s.Key == zid)
+                            {
+                                // add credit hours to student
+                                s.Value.setCreditHours(c.GetTotalCurrentlyEnrolled());
+                                c.dropStudent(zid);
+                                Output_RichTextBox.Text += "\nStudent added successfully.\n";
+                            }
+                        }
+                    }
+                }
+            }
+
+            // update course list
+            listBox2.Items.Clear();
+            foreach (Course c in coursePool)
+                listBox2.Items.Add(c);
+
         }
     }
 

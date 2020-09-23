@@ -60,12 +60,20 @@ namespace DonnyJustin_Assign2
                             this.GetTotalCurrentlyEnrolled() + "/" + this.GetMaxCapacity() + ")";
             return course;
         }
+
         public void addStudent(uint zid)
         {
-            //add student to the end of the array
-            studentsEnrolled[studentsEnrolled.Length-1] = zid;
-            this.totalCurrentlyEnrolled += 1;
+            for (int i = 0; i < studentsEnrolled.Length; i++)
+            {
+                if (studentsEnrolled[i] == 0)
+                {
+                    studentsEnrolled[i] = zid;
+                    this.totalCurrentlyEnrolled += 1;
+                    break;
+                }
+            }
         }
+
         public void dropStudent(uint zid)
         {
             for (int i = 0; i < studentsEnrolled.Length; i++)
