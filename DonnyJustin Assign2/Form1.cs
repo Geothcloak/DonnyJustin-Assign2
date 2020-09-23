@@ -25,10 +25,10 @@ namespace DonnyJustin_Assign2
             IDictionary<uint, Student> studentPool = new Dictionary<uint, Student>();
 
             // read student input file
-            string[] studentLines = File.ReadAllLines("../input_01.txt");
+            string[] studentLines = File.ReadAllLines("../../input_01.txt");
 
             // read coures input file
-            string[] courseLines = File.ReadAllLines("../input_02.txt");
+            string[] courseLines = File.ReadAllLines("../../input_02.txt");
 
             // add courses to coursePool
             for (int i = 0; i < courseLines.Length; i++)
