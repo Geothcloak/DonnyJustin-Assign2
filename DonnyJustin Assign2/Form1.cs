@@ -104,11 +104,7 @@ namespace DonnyJustin_Assign2
             string courseNumber = textBox4.Text;
             string sectionNumber = textBox3.Text;
             string capacity = numericUpDown1.Value.ToString();
-            //richTextBox1.Text += courseCode + "\n";
-            //richTextBox1.Text += courseNumber + "\n";
-            //richTextBox1.Text += sectionNumber + "\n";
-            //richTextBox1.Text += capacity + "\n";
-            richTextBox1.Text += courseCode + " " + courseNumber + "-" + sectionNumber + "(0/" + capacity + "\n";
+            richTextBox1.Text += courseCode + " " + courseNumber + "-" + sectionNumber + " (0/" + capacity + ")" + "\n";
         }
     }
 
