@@ -1,4 +1,11 @@
-﻿using System;
+﻿///////////////////////////////////////
+/// Donny Kapic z1855273
+/// Justin Roesner z1858242
+/// CSCI 473 .NET programming
+/// Assign 2
+///////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -125,8 +132,41 @@ namespace DonnyJustin_Assign2
             string zid = textBox2.Text;
             string studentMajor = (string)comboBox1.SelectedItem;
             string academicYear = (string)comboBox2.SelectedItem;
+<<<<<<< Updated upstream
             richTextBox1.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "0" + "\n";
  
+=======
+            Output_RichTextBox.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0" + "\n";
+
+            ushort year = 5;
+            if (string.Equals("Freshman", (string)comboBox2.SelectedItem){
+
+            }
+            if (comboBox2.Items.Equals("Freshman"))
+                year = 0;
+            else if (comboBox2.Items.Equals("Sophomore"))
+                year = 1;
+            else if (comboBox2.Items.Equals("Junior"))
+                year = 2;
+            else if (comboBox2.Items.Equals("Senior"))
+                year = 3;
+            else if (comboBox2.Items.Equals("PostBacc"))
+                year = 4;
+            else
+                return;     // invalid year
+
+            string combined = zid + "," + studentName + "," + studentMajor + "," + year.ToString() + "," + "0";
+            string[] tokens = combined.Split(',');
+            uint _zid = Convert.ToUInt32(tokens[0]);
+
+            Student student = new Student(combined);
+            studentPool.Add(_zid, student);
+
+            // update course list
+            listBox1.Items.Clear();
+            foreach (KeyValuePair<uint, Student> s in studentPool)
+                listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
+>>>>>>> Stashed changes
         }
     }
 }
