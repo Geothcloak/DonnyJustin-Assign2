@@ -26,6 +26,9 @@ namespace DonnyJustin_Assign2
             // read coures input file
             string[] courseLines = File.ReadAllLines("../../input_02.txt");
 
+            // read majors input file
+            string[] majorLines = File.ReadAllLines("../../input_03.txt");
+
             // add courses to coursePool
             for (int i = 0; i < courseLines.Length; i++)
             {
@@ -60,6 +63,17 @@ namespace DonnyJustin_Assign2
                     comboBox3.Items.Add(c.GetDepartmentCode());
                 }
             }
+
+            //add majors to dropdown
+            foreach (string line in majorLines)
+            {
+                comboBox1.Items.Add((line));
+            }
+            comboBox2.Items.Add("Freshman");
+            comboBox2.Items.Add("Sophomore");
+            comboBox2.Items.Add("Junior");
+            comboBox2.Items.Add("Senior");
+            comboBox2.Items.Add("PostBacc");
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -214,14 +228,14 @@ namespace DonnyJustin_Assign2
                     Output_RichTextBox.Text += "-----------------------------------------------\n";
 
                     uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
-                    foreach (KeyValuePair<uint, Student> s in studentPool) 
+                    foreach (KeyValuePair<uint, Student> s in studentPool)
                     {
                         for (int i = 0; i < tempArray.Length; i++)
                         {
                             if (s.Key == tempArray[i])              // if student is enrolled in the class, print their info
                             {
-                                Output_RichTextBox.Text += "z" + tempArray[i] + "   " + s.Value.getLastName() + ", " 
-                                                        + s.Value.getFirstName() + "   " + s.Value.getMajor() +"\n";
+                                Output_RichTextBox.Text += "z" + tempArray[i] + "   " + s.Value.getLastName() + ", "
+                                                        + s.Value.getFirstName() + "   " + s.Value.getMajor() + "\n";
                                 emptyCheck++;
                             }
                         }
@@ -232,7 +246,7 @@ namespace DonnyJustin_Assign2
             if (emptyCheck == 0)
                 Output_RichTextBox.Text += "Class is empty.\n";
 
-           
+
         }
 
         private void Drop_Button_Click(object sender, EventArgs e)
@@ -349,17 +363,34 @@ namespace DonnyJustin_Assign2
             string zid = textBox2.Text;
             string studentMajor = (string)comboBox1.SelectedItem;
             string academicYear = (string)comboBox2.SelectedItem;
-            string combined = zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0";
             Output_RichTextBox.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0" + "\n";
 
+            ushort year = 5;
+
+            if (comboBox2.Items.Equals("Freshman"))
+                year = 0;
+            else if (comboBox2.Items.Equals("Sophomore"))
+                year = 1;
+            else if (comboBox2.Items.Equals("Junior"))
+                year = 2;
+            else if (comboBox2.Items.Equals("Senior"))
+                year = 3;
+            else if (comboBox2.Items.Equals("PostBacc"))
+                year = 4;
+            else
+                return;     // invalid year
+
+            string combined = zid + "," + studentName + "," + studentMajor + "," + year.ToString() + "," + "0";
             string[] tokens = combined.Split(',');
             uint _zid = Convert.ToUInt32(tokens[0]);
+
             Student student = new Student(combined);
             studentPool.Add(_zid, student);
 
+            // update course list
+            listBox1.Items.Clear();
             foreach (KeyValuePair<uint, Student> s in studentPool)
                 listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
         }
     }
-
 }
