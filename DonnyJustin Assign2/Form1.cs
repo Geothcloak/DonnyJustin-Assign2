@@ -418,5 +418,10 @@ namespace DonnyJustin_Assign2
             foreach (KeyValuePair<uint, Student> s in studentPool)
                 listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
         }
+
+        private void Clear_Button_Click(object sender, EventArgs e)
+        {
+            Output_RichTextBox.Text = "";
+        }
     }
 }

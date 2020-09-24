@@ -60,6 +60,7 @@
             this.Course_RichTextBox = new System.Windows.Forms.TextBox();
             this.creditHours_TextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.Clear_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -339,11 +340,22 @@
             this.label12.TabIndex = 31;
             this.label12.Text = "Credit Hours\r\n";
             // 
+            // Clear_Button
+            // 
+            this.Clear_Button.Location = new System.Drawing.Point(16, 431);
+            this.Clear_Button.Name = "Clear_Button";
+            this.Clear_Button.Size = new System.Drawing.Size(75, 23);
+            this.Clear_Button.TabIndex = 32;
+            this.Clear_Button.Text = "Clear";
+            this.Clear_Button.UseVisualStyleBackColor = true;
+            this.Clear_Button.Click += new System.EventHandler(this.Clear_Button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1141, 661);
+            this.Controls.Add(this.Clear_Button);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.creditHours_TextBox);
             this.Controls.Add(this.Course_RichTextBox);
@@ -418,6 +430,7 @@
         private System.Windows.Forms.TextBox Course_RichTextBox;
         private System.Windows.Forms.TextBox creditHours_TextBox;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button Clear_Button;
     }
 }
 
