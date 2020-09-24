@@ -30,6 +30,9 @@ namespace DonnyJustin_Assign2
             // read coures input file
             string[] courseLines = File.ReadAllLines("../../input_02.txt");
 
+            // read majors input file
+            string[] majorLines = File.ReadAllLines("../../input03.txt");
+
             // add courses to coursePool
             for (int i = 0; i < courseLines.Length; i++)
             {
@@ -65,6 +68,16 @@ namespace DonnyJustin_Assign2
                     comboBox3.Items.Add(c.GetDepartmentCode());
                 }
             }
+            //add majors to dropdown
+            foreach (string line in majorLines)
+            {
+                    comboBox1.Items.Add((line));
+            }
+            comboBox2.Items.Add("Freshman");
+            comboBox2.Items.Add("Sophomore");
+            comboBox2.Items.Add("Junior");
+            comboBox2.Items.Add("Senior");
+            comboBox2.Items.Add("PostBacc");
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -93,8 +106,6 @@ namespace DonnyJustin_Assign2
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //on course activated item change: 
-            richTextBox1.Text += "course changed \n";
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -106,6 +117,16 @@ namespace DonnyJustin_Assign2
             string capacity = numericUpDown1.Value.ToString();
             richTextBox1.Text += courseCode + " " + courseNumber + "-" + sectionNumber + " (0/" + capacity + ")" + "\n";
         }
-    }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //CLICK on Add student
+            string studentName = textBox1.Text;
+            string zid = textBox2.Text;
+            string studentMajor = (string)comboBox1.SelectedItem;
+            string academicYear = (string)comboBox2.SelectedItem;
+            richTextBox1.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "0" + "\n";
+ 
+        }
+    }
 }
