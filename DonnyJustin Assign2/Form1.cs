@@ -104,7 +104,32 @@ namespace DonnyJustin_Assign2
             // if there is a zid in the textbox, search for that student
             if (ZID_RichTextBox.Text.Length <= 0 && Course_RichTextBox.Text.Length <= 0)
             {
-                Output_RichTextBox.Text += "Please enter a ZID and/or a course.\n";
+                Output_RichTextBox.Text += "\nPlease enter a ZID and/or a course. You can also click on a student in the list.\n";
+                string selectedStudent = listBox1.SelectedItem.ToString();
+
+                string[] tokens = selectedStudent.Split(' ');
+                tokens[0] = tokens[0].Remove(0, 1);
+
+                foreach (KeyValuePair<uint, Student> s in studentPool)
+                {
+                    if (tokens[0] == s.Key.ToString())
+                    {
+                        Output_RichTextBox.Text += s.Value + "\n";
+                        Output_RichTextBox.Text += "-----------------------------------------------------------------\n";
+
+                        foreach (Course c in coursePool)
+                        {
+                            uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
+                            for (int i = 0; i < tempArray.Length; i++)
+                            {
+                                if (s.Key == tempArray[i])
+                                    Output_RichTextBox.Text += c + "\n";
+                            }
+                        }
+
+                    }
+
+                }
             }
 
             if (ZID_RichTextBox.Text.Length > 0)
@@ -363,22 +388,23 @@ namespace DonnyJustin_Assign2
             string zid = textBox2.Text;
             string studentMajor = (string)comboBox1.SelectedItem;
             string academicYear = (string)comboBox2.SelectedItem;
-            Output_RichTextBox.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0" + "\n";
+            Output_RichTextBox.Text += "z" + zid + ", " + studentName + ", " + studentMajor + ", " + academicYear + ", " + "0" + "\n";
 
             ushort year = 5;
 
             if (comboBox2.Items.Equals("Freshman"))
                 year = 0;
-            else if (comboBox2.Items.Equals("Sophomore"))
+            else if (comboBox2.Items.Contains("Sophomore"))
                 year = 1;
-            else if (comboBox2.Items.Equals("Junior"))
+            else if (comboBox2.Items.Contains("Junior"))
                 year = 2;
-            else if (comboBox2.Items.Equals("Senior"))
+            else if (comboBox2.Items.Contains("Senior"))
                 year = 3;
-            else if (comboBox2.Items.Equals("PostBacc"))
+            else if (comboBox2.Items.Contains("PostBacc"))
                 year = 4;
             else
-                return;     // invalid year
+                return;
+            
 
             string combined = zid + "," + studentName + "," + studentMajor + "," + year.ToString() + "," + "0";
             string[] tokens = combined.Split(',');
