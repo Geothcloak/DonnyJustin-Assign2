@@ -2,7 +2,7 @@
 /// Donny Kapic z1855273
 /// Justin Roesner z1858242
 /// CSCI 473 .NET programming
-/// Assign 1
+/// Assign 2
 ///////////////////////////////////////
 using System;
 using System.Collections.Generic;

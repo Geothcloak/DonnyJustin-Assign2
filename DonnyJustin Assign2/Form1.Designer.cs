@@ -160,7 +160,6 @@
             this.label4.Size = new System.Drawing.Size(114, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Last Name, First Name";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -277,7 +276,6 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(194, 381);
             this.listBox2.TabIndex = 23;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // comboBox1
             // 
