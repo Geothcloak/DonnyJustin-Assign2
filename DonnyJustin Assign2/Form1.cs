@@ -137,46 +137,111 @@ namespace DonnyJustin_Assign2
 
         private void Search_Button_Click(object sender, EventArgs e)
         {
-            // if there is a zid in the textbox, search for that student
+            //if both text boxes are empty do nothing
             if (ZID_RichTextBox.Text.Length <= 0 && Course_RichTextBox.Text.Length <= 0)
             {
-                Output_RichTextBox.Text += "\nPlease enter a ZID and/or a course. You can also click on a student in the list.\n";
+                //do nothing and refill lists
+                listBox1.Items.Clear();
+                foreach (KeyValuePair<uint, Student> s in sortedPool)
+                    listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
+                listBox2.Items.Clear();
+                var sortedCourses = sortCourses(coursePool);
+                foreach (Course c in sortedCourses)
+                    listBox2.Items.Add(c);
+
             }
 
-            // if there is a zid in textbox
-            if (ZID_RichTextBox.Text.Length > 0)
+            //if both textboxes are full sort by both
+            else if (ZID_RichTextBox.Text.Length > 0 && Course_RichTextBox.Text.Length > 0)
             {
-                foreach (KeyValuePair<uint, Student> s in studentPool)
+                List<Student> tempStudentList = new List<Student>();
+                foreach (KeyValuePair<uint, Student> kvp in studentPool)
                 {
-                    if (ZID_RichTextBox.Text == s.Key.ToString())
-                    {
-                        Output_RichTextBox.Text += s.Value + "\n";
-                        Output_RichTextBox.Text += "-----------------------------------------------------------------\n";
-
-                        foreach (Course c in coursePool)
-                        {
-                            uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
-                            for (int i = 0; i < tempArray.Length; i++)
-                            {
-                                if (s.Key == tempArray[i])
-                                    Output_RichTextBox.Text += c + "\n";
-                            }
-                        }
-
+                    if (kvp.Key.ToString().StartsWith(ZID_RichTextBox.Text))
+                    { 
+                        tempStudentList.Add(kvp.Value);
                     }
+                }
+                //clear list box
+                listBox1.Items.Clear();
 
+                var sortedStudents = tempStudentList.OrderBy(s => s.getZid()).ToList();
+
+                //for loop print array
+                foreach (Student s in sortedStudents)
+                {
+                    listBox1.Items.Add("z" + s.getZid() + " ~ " + s.getLastName() + ", " + s.getFirstName());
+                }
+
+                List<Course> tempCoursePool = new List<Course>();
+                foreach (Course c in coursePool)
+                {
+                    if (string.Equals(c.GetDepartmentCode(), Course_RichTextBox.Text))
+                    {
+                        tempCoursePool.Add(c);
+                    }
+                }
+
+                //clear list box
+                listBox2.Items.Clear();
+                var sortedCourses = sortCourses(tempCoursePool);
+
+                foreach (Course c in sortedCourses)
+                {
+                    listBox2.Items.Add(c);
+                }
+            }
+            //if only zid textbox is full
+            else if (ZID_RichTextBox.Text.Length > 0)
+            {
+                listBox2.Items.Clear();
+                foreach (Course c in coursePool)
+                {
+                    listBox2.Items.Add(c);
+                }
+
+                List<Student> tempStudentList = new List<Student>();
+                foreach (KeyValuePair<uint, Student> kvp in studentPool)
+                {
+                    if (kvp.Key.ToString().StartsWith(ZID_RichTextBox.Text))
+                    {
+                        tempStudentList.Add(kvp.Value);
+                    }
+                }
+                //clear list box
+                listBox1.Items.Clear();
+                var sortedStudents = tempStudentList.OrderBy(s => s.getZid()).ToList();
+
+                //for loop print array
+                foreach (Student s in sortedStudents)
+                {
+                    listBox1.Items.Add("z" + s.getZid() + " ~ " + s.getLastName() + ", " + s.getFirstName());
                 }
             }
 
-            if (Course_RichTextBox.Text.Length > 0)
+            //if only course textbox is full
+            else
             {
-                foreach (Course c in coursePool)
-                    if (Course_RichTextBox.Text == c.GetDepartmentCode())
-                    {
-                        Output_RichTextBox.Text += c.ToString() + "\n";
-                    }
-            }
+                listBox1.Items.Clear();
+                foreach (KeyValuePair<uint, Student> s in sortedPool)
+                    listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
 
+                List<Course> tempCoursePool = new List<Course>();
+                foreach (Course c in coursePool)
+                {
+                    if (string.Equals(c.GetDepartmentCode(), Course_RichTextBox.Text))
+                    {
+                        tempCoursePool.Add(c);
+                    }
+                }
+                //clear list box
+                listBox2.Items.Clear();
+
+                foreach (Course c in tempCoursePool)
+                {
+                    listBox2.Items.Add(c);
+                }
+            }
         }
 
         // Enroll student into a class
