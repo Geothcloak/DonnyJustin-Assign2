@@ -34,7 +34,7 @@ namespace DonnyJustin_Assign2
 
         public Course(string line)
         {
-            string[] tokens = line.Split(',');
+            string[] tokens = line.Split(' ', ',');
 
             SetDepartmentCode(tokens[0]);       // set department code
 
@@ -43,8 +43,8 @@ namespace DonnyJustin_Assign2
 
             SetSectionNumber(tokens[2]);        // set section number
 
-            ushort numEnrolled = Convert.ToUInt16(tokens[3]);   // set number of students currently enrolled
-            SetCreditHours(numEnrolled);
+            ushort creditHours = Convert.ToUInt16(tokens[3]);   // set number of students currently enrolled
+            SetCreditHours(creditHours);
 
             ushort classCapacity = Convert.ToUInt16(tokens[4]); // set max class capacity
             SetCapacity(classCapacity);
@@ -53,6 +53,7 @@ namespace DonnyJustin_Assign2
 
             totalCurrentlyEnrolled = 0;
         }
+
         public override string ToString()
         {
             //format and return course string

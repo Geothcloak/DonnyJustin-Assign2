@@ -51,6 +51,15 @@ namespace DonnyJustin_Assign2
                 listBox2.Items.Add(c);
             foreach (KeyValuePair<uint, Student> s in sortedPool)
                 listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
+
+            foreach (Course c in coursePool)
+            {
+                int index = comboBox3.FindString(c.GetDepartmentCode());
+                if (index == -1)
+                {
+                    comboBox3.Items.Add(c.GetDepartmentCode());
+                }
+            }
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -80,7 +89,9 @@ namespace DonnyJustin_Assign2
         {
             // if there is a zid in the textbox, search for that student
             if (ZID_RichTextBox.Text.Length <= 0 && Course_RichTextBox.Text.Length <= 0)
-                return;
+            {
+                Output_RichTextBox.Text += "Please enter a ZID and/or a course.\n";
+            }
 
             if (ZID_RichTextBox.Text.Length > 0)
             {
@@ -88,7 +99,19 @@ namespace DonnyJustin_Assign2
                 {
                     if (ZID_RichTextBox.Text == s.Key.ToString())
                     {
-                        Output_RichTextBox.Text += "z" + s.Key + "   " + s.Value.getLastName() + ", " + s.Value.getFirstName() + "   " + s.Value.getMajor() + "\n";
+                        Output_RichTextBox.Text += s.Value + "\n";
+                        Output_RichTextBox.Text += "-----------------------------------------------------------------\n";
+
+                        foreach (Course c in coursePool)
+                        {
+                            uint[] tempArray = c.GetStudentsEnrolled();     // get list of zid's enrolled
+                            for (int i = 0; i < tempArray.Length; i++)
+                            {
+                                if (s.Key == tempArray[i])
+                                    Output_RichTextBox.Text += c + "\n";
+                            }
+                        }
+
                     }
 
                 }
@@ -271,7 +294,7 @@ namespace DonnyJustin_Assign2
                                 // add credit hours to student
                                 s.Value.setCreditHours(c.GetTotalCurrentlyEnrolled());
                                 c.dropStudent(zid);
-                                Output_RichTextBox.Text += "\nStudent added successfully.\n";
+                                Output_RichTextBox.Text += "\nStudent dropped successfully.\n";
                             }
                         }
                     }
@@ -282,7 +305,60 @@ namespace DonnyJustin_Assign2
             listBox2.Items.Clear();
             foreach (Course c in coursePool)
                 listBox2.Items.Add(c);
+        }
 
+        private void AddCourse_Button_Click(object sender, EventArgs e)
+        {
+            string courseCode = (string)comboBox3.SelectedItem;
+            string courseNumber = textBox4.Text;
+            string sectionNumber = textBox3.Text;
+            string creditHours = creditHours_TextBox.Text;
+            string capacity = numericUpDown1.Value.ToString();
+            string combined = courseCode + "," + courseNumber + "," + sectionNumber + "," + creditHours + "," + capacity;
+
+            if (courseNumber.Length > 4)
+            {
+                Output_RichTextBox.Text += "\nDepartment number must be exactly 4 characters long.\n";
+                return;
+            }
+            if (sectionNumber.Length != 4)
+            {
+                Output_RichTextBox.Text += "\nSection number must be exactly 4 characters long.\n";
+                return;
+            }
+            if (Convert.ToUInt32(creditHours) < 0 || Convert.ToUInt32(creditHours) > 6)
+            {
+                Output_RichTextBox.Text += "\nCredit hours must be in the range [0,6].\n";
+            }
+
+            Output_RichTextBox.Text += courseCode + " " + courseNumber + "-" + sectionNumber + " (0/" + capacity + ")" + "\n";
+
+            Course course = new Course(combined);
+            coursePool.Add(course);
+
+            // update course list
+            listBox2.Items.Clear();
+            foreach (Course c in coursePool)
+                listBox2.Items.Add(c);
+        }
+
+        private void AddStudent_Button_Click(object sender, EventArgs e)
+        {
+            //CLICK on Add student
+            string studentName = textBox1.Text;
+            string zid = textBox2.Text;
+            string studentMajor = (string)comboBox1.SelectedItem;
+            string academicYear = (string)comboBox2.SelectedItem;
+            string combined = zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0";
+            Output_RichTextBox.Text += zid + "," + studentName + "," + studentMajor + "," + academicYear + "," + "0" + "\n";
+
+            string[] tokens = combined.Split(',');
+            uint _zid = Convert.ToUInt32(tokens[0]);
+            Student student = new Student(combined);
+            studentPool.Add(_zid, student);
+
+            foreach (KeyValuePair<uint, Student> s in studentPool)
+                listBox1.Items.Add("z" + s.Key + " ~ " + s.Value.getLastName() + ", " + s.Value.getFirstName());
         }
     }
 

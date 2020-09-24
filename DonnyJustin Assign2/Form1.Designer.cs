@@ -32,8 +32,8 @@
             this.Enroll_Button = new System.Windows.Forms.Button();
             this.Drop_Button = new System.Windows.Forms.Button();
             this.Search_Button = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.AddStudent_Button = new System.Windows.Forms.Button();
+            this.AddCourse_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,6 +58,8 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.ZID_RichTextBox = new System.Windows.Forms.TextBox();
             this.Course_RichTextBox = new System.Windows.Forms.TextBox();
+            this.creditHours_TextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,23 +103,25 @@
             this.Search_Button.UseVisualStyleBackColor = true;
             this.Search_Button.Click += new System.EventHandler(this.Search_Button_Click);
             // 
-            // button5
+            // AddStudent_Button
             // 
-            this.button5.Location = new System.Drawing.Point(19, 265);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Add Student";
-            this.button5.UseVisualStyleBackColor = true;
+            this.AddStudent_Button.Location = new System.Drawing.Point(19, 265);
+            this.AddStudent_Button.Name = "AddStudent_Button";
+            this.AddStudent_Button.Size = new System.Drawing.Size(75, 23);
+            this.AddStudent_Button.TabIndex = 4;
+            this.AddStudent_Button.Text = "Add Student";
+            this.AddStudent_Button.UseVisualStyleBackColor = true;
+            this.AddStudent_Button.Click += new System.EventHandler(this.AddStudent_Button_Click);
             // 
-            // button6
+            // AddCourse_Button
             // 
-            this.button6.Location = new System.Drawing.Point(16, 402);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "Add Course";
-            this.button6.UseVisualStyleBackColor = true;
+            this.AddCourse_Button.Location = new System.Drawing.Point(16, 402);
+            this.AddCourse_Button.Name = "AddCourse_Button";
+            this.AddCourse_Button.Size = new System.Drawing.Size(75, 23);
+            this.AddCourse_Button.TabIndex = 5;
+            this.AddCourse_Button.Text = "Add Course";
+            this.AddCourse_Button.UseVisualStyleBackColor = true;
+            this.AddCourse_Button.Click += new System.EventHandler(this.AddCourse_Button_Click);
             // 
             // label1
             // 
@@ -319,11 +323,29 @@
             this.Course_RichTextBox.Size = new System.Drawing.Size(100, 20);
             this.Course_RichTextBox.TabIndex = 29;
             // 
+            // creditHours_TextBox
+            // 
+            this.creditHours_TextBox.Location = new System.Drawing.Point(249, 329);
+            this.creditHours_TextBox.Name = "creditHours_TextBox";
+            this.creditHours_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.creditHours_TextBox.TabIndex = 30;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(246, 313);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(65, 13);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Credit Hours\r\n";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1141, 661);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.creditHours_TextBox);
             this.Controls.Add(this.Course_RichTextBox);
             this.Controls.Add(this.ZID_RichTextBox);
             this.Controls.Add(this.numericUpDown1);
@@ -348,8 +370,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.AddCourse_Button);
+            this.Controls.Add(this.AddStudent_Button);
             this.Controls.Add(this.Search_Button);
             this.Controls.Add(this.Drop_Button);
             this.Controls.Add(this.Enroll_Button);
@@ -368,8 +390,8 @@
         private System.Windows.Forms.Button Enroll_Button;
         private System.Windows.Forms.Button Drop_Button;
         private System.Windows.Forms.Button Search_Button;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button AddStudent_Button;
+        private System.Windows.Forms.Button AddCourse_Button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -394,6 +416,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TextBox ZID_RichTextBox;
         private System.Windows.Forms.TextBox Course_RichTextBox;
+        private System.Windows.Forms.TextBox creditHours_TextBox;
+        private System.Windows.Forms.Label label12;
     }
 }
 
